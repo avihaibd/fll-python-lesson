@@ -163,6 +163,7 @@ canvas{width:100%;height:auto;display:block;border-radius:8px;border:1px solid v
 .pl-grid label{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:6px 0;font-size:14px}
 .pl-grid input,.pl-grid select{font:500 14px var(--f-body);width:110px;padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--fg)}
 .pl-grid label.chk{justify-content:flex-start}.pl-grid label.chk input{width:auto}.pl-note{font-size:13px;color:var(--muted);margin:8px 0 0}
+.pl-inl{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}.pl-inl input{width:70px;font:500 13px var(--f-body);padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--fg)}
 .pl-warn{margin:6px 0;color:var(--bad);font-size:14px}.pl-grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;margin-bottom:28px}
 #plTbl td,#plTbl th{padding:6px 10px;font-size:14px;direction:ltr;text-align:center}
 .sep{width:1px;height:26px;background:var(--line);margin:0 4px;flex:none}
@@ -368,11 +369,11 @@ table.api{min-width:0}table.api td{padding:7px 12px;font-size:14px}table.api td:
 <section class="page hidden" id="planner-tab">
   <h1>תכנון ריצה על המפה</h1>
   <p class="lede">לוחצים על המפה כדי להוסיף נקודות מסלול, והכלי מחשב פניות ומרחקים וכותב קוד. אפשר למדוד, לבחור התחלה מימין או משמאל, לשנות את מידות הרובוט עם הלבשה או בלעדיה, ולבקש הצעה להגעה לדגם.</p>
-  <div class="note">המפה היא התמונה ממסמך הכללים (2362×1143 מ"מ). מיקומי הדגמים מוערכים לפי התרשים, וגודלם משוער: הכלי הוא עזר לתכנון ראשוני, ואחר כך מכווננים על המחצלת האמיתית. הזווית: 0° היא כלפי מעלה, 90° ימינה, כמו בסימולטור.</div>
-  <div class="pl-wrap"><canvas id="plcv" width="1000" height="484" aria-label="מפת המגרש לתכנון ריצה"></canvas></div>
+  <div class="note">המפה היא התמונה ממסמך הכללים (2362×1143 מ"מ). מיקומי הדגמים מוערכים לפי התרשים, וגודלם משוער: הכלי הוא עזר לתכנון ראשוני, ואחר כך מכווננים על המחצלת האמיתית. לחיצה על המפה מוסיפה נקודה. אפשר לגרור נקודה, לגרור את הרובוט (נקודת ההתחלה), לגרור מתוך הקו כדי להוסיף נקודה באמצע ולהסיט את המסלול, ללחוץ פעמיים על נקודה כדי למחוק אותה (או לבחור ולהקיש Delete). הזווית: 0° היא כלפי מעלה, 90° ימינה, כמו בסימולטור.</div>
+  <div class="pl-wrap"><canvas id="plcv" tabindex="0" width="1000" height="484" aria-label="מפת המגרש לתכנון ריצה"></canvas></div>
   <div class="pl-bar">
     <div class="seg2" role="group" aria-label="מצב"><button class="btn" id="plModePlan" aria-pressed="true">תכנון מסלול</button><button class="btn" id="plModeMeasure" aria-pressed="false">מדידה</button></div>
-    <button class="btn" id="plUndo">בטל נקודה</button><button class="btn" id="plClear">נקה</button>
+    <button class="btn" id="plUndo">בטל נקודה</button><button class="btn" id="plClear">נקה</button><button class="btn primary" id="plSim">הרץ סימולציה</button><button class="btn" id="plStop" disabled>עצור</button><label class="pl-inl">מהירות <input type="number" id="plV" value="300" min="50" max="1000"> מ"מ/ש'</label><label class="pl-inl">פנייה <input type="number" id="plT" value="150" min="30" max="720"> °/ש'</label>
     <span id="plMeasure" class="pl-read"></span>
   </div>
   <div class="pl-grid">
@@ -1753,8 +1754,8 @@ const TERMS = [
   const FW = 2362, FH = 1143, cv = $("plcv"), c = cv.getContext("2d"), S = cv.width / FW;
   const MIS = [[1,"Drone Survey",1036,1050],[2,"Exploding Seeds",746,594],[3,"Flip the Rock",100,464],[4,"Lucky Leaves",180,150],[5,"Reaching Roots",464,80],[6,"Leafcutter Frenzy",1780,80],[7,"Humongous Fungus",1930,80],[8,"Tangled",636,80],[9,"Research Platform",770,80],[10,"Fragile Microhabitats (שמאלי)",924,120],["10b","Fragile Microhabitats (אמצעי)",1290,370],[11,"Window to the Past",1656,536],[12,"Forest Elder",2270,376]];
   const R = 110;
-  let pts = [], mode = "plan", mA = null, mB = null, drag = -1, target = null;
-  const sel = $("plMis"); MIS.forEach((m, i) => sel.add(new Option(m[0] + " · " + m[1], i)));
+  let pts = [], mode = "plan", mA = null, mB = null, drag = -1, target = null, sel = -1, simPose = null, simRaf = 0, simMsg = "", trail = [];
+  const misSel = $("plMis"); MIS.forEach((m, i) => misSel.add(new Option(m[0] + " · " + m[1], i)));
   const num = id => +$(id).value || 0, rad = d => d * Math.PI / 180, deg = r => r * 180 / Math.PI;
   const norm = a => { a = ((a + 180) % 360 + 360) % 360 - 180; return a === -180 ? 180 : a; };
   const dims = () => ({ W: num("plW"), L: num("plL"), F: $("plAtt").checked ? num("plAF") : 0, Sd: $("plAtt").checked ? num("plAS") : 0 });
@@ -1790,7 +1791,9 @@ const TERMS = [
     c.strokeStyle = "#0b2447"; c.lineWidth = 3; c.beginPath(); c.moveTo(st.x * S, st.y * S); pts.forEach(p => c.lineTo(p[0] * S, p[1] * S)); c.stroke();
     sg.forEach(s => poly(s.to[0], s.to[1], s.h, "rgba(11,36,71,.15)", "#0b2447"));
     poly(st.x, st.y, st.h, "rgba(232,64,47,.3)", "#e8402f");
-    pts.forEach((p, i) => { c.beginPath(); c.arc(p[0] * S, p[1] * S, 8, 0, 7); c.fillStyle = "#0b2447"; c.fill(); c.fillStyle = "#fff"; c.font = "bold 10px Heebo"; c.textAlign = "center"; c.fillText(i + 1, p[0] * S, p[1] * S + 3.5); });
+    pts.forEach((p, i) => { c.beginPath(); c.arc(p[0] * S, p[1] * S, 8, 0, 7); c.fillStyle = i === sel ? "#e8402f" : "#0b2447"; c.fill(); c.fillStyle = "#fff"; c.font = "bold 10px Heebo"; c.textAlign = "center"; c.fillText(i + 1, p[0] * S, p[1] * S + 3.5); });
+    if (trail.length > 1) { c.strokeStyle = "#a15c00"; c.lineWidth = 2; c.beginPath(); trail.forEach((q, i) => i ? c.lineTo(q[0] * S, q[1] * S) : c.moveTo(q[0] * S, q[1] * S)); c.stroke(); }
+    if (simPose) poly(simPose.x, simPose.y, simPose.h, simPose.crash ? "rgba(198,40,40,.55)" : "rgba(255,170,0,.55)", "#a15c00");
     if (mA) { c.strokeStyle = "#a15c00"; c.lineWidth = 2.5; c.setLineDash([6, 4]); c.beginPath(); c.moveTo(mA[0] * S, mA[1] * S); if (mB) c.lineTo(mB[0] * S, mB[1] * S); c.stroke(); c.setLineDash([]);
       [mA, mB].forEach(p => { if (p) { c.beginPath(); c.arc(p[0] * S, p[1] * S, 5, 0, 7); c.fillStyle = "#a15c00"; c.fill(); } }); }
     // table + code
@@ -1800,22 +1803,52 @@ const TERMS = [
       if (Math.abs(s.turn) >= 1) code += "robot.turn(" + Math.round(s.turn) + ")\n"; code += "robot.straight(" + Math.round(s.dist) + ")\n"; });
     if (!sg.length) code += "# לחצו על המפה כדי להוסיף נקודות\n"; else t += "<tr><th colspan=2>סה\"כ</th><th>" + tot.toFixed(0) + "</th><th>" + (sg[sg.length - 1].h).toFixed(0) + "</th></tr>";
     $("plTbl").innerHTML = t; $("plCode").textContent = code; $("plWarn").textContent = warnings(sg).join(" | ");
-    $("plMeasure").textContent = mA && mB ? "מרחק " + Math.hypot(mB[0] - mA[0], mB[1] - mA[1]).toFixed(0) + " מ\"מ | כיוון " + deg(Math.atan2(mB[0] - mA[0], -(mB[1] - mA[1]))).toFixed(0) + "° | ΔX " + (mB[0] - mA[0]).toFixed(0) + " ΔY " + (mB[1] - mA[1]).toFixed(0) : (mode === "measure" ? "לחצו על שתי נקודות למדידה" : "");
+    $("plMeasure").textContent = simMsg ? simMsg : mA && mB ? "מרחק " + Math.hypot(mB[0] - mA[0], mB[1] - mA[1]).toFixed(0) + " מ\"מ | כיוון " + deg(Math.atan2(mB[0] - mA[0], -(mB[1] - mA[1]))).toFixed(0) + "° | ΔX " + (mB[0] - mA[0]).toFixed(0) + " ΔY " + (mB[1] - mA[1]).toFixed(0) : (mode === "measure" ? "לחצו על שתי נקודות למדידה" : "");
   }
   function at(e){ const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * FW, (e.clientY - r.top) / r.height * FH]; }
-  cv.addEventListener("pointerdown", e => { const p = at(e);
+  const tolMm = () => 18 * FW / cv.getBoundingClientRect().width;
+  const segDist = (p, a, b) => { const dx = b[0] - a[0], dy = b[1] - a[1], l2 = dx * dx + dy * dy || 1, t = Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / l2));
+    return Math.hypot(p[0] - a[0] - t * dx, p[1] - a[1] - t * dy); };
+  cv.addEventListener("pointerdown", e => { const p = at(e); cv.focus(); stopSim();
     if (mode === "measure") { if (!mA || mB) { mA = p; mB = null; } else mB = p; render(); return; }
-    drag = pts.findIndex(q => Math.hypot(q[0] - p[0], q[1] - p[1]) < 18 * FW / cv.getBoundingClientRect().width);
-    if (drag < 0) { pts.push(p); render(); } else cv.setPointerCapture(e.pointerId); });
-  cv.addEventListener("pointermove", e => { if (drag >= 0) { pts[drag] = at(e); render(); } else if (mode === "measure" && mA && !mB) { const sv = mB; mB = at(e); render(); mB = sv; } });
+    const tol = tolMm(), st = start();
+    drag = pts.findIndex(q => Math.hypot(q[0] - p[0], q[1] - p[1]) < tol);
+    if (drag < 0 && Math.hypot(st.x - p[0], st.y - p[1]) < Math.max(tol * 2, 60)) drag = -2;
+    if (drag === -1) { const path = [[st.x, st.y]].concat(pts);
+      for (let i = 0; i < pts.length; i++) if (segDist(p, path[i], path[i + 1]) < tol * 0.8) { pts.splice(i, 0, p); drag = i; break; } }
+    if (drag === -1) { pts.push(p); drag = pts.length - 1; }
+    sel = drag >= 0 ? drag : -1; cv.setPointerCapture(e.pointerId); render(); });
+  cv.addEventListener("pointermove", e => { if (drag >= 0) { pts[drag] = at(e); render(); }
+    else if (drag === -2) { const p = at(e); $("plX").value = Math.round(p[0]); $("plY").value = Math.round(p[1]); render(); }
+    else if (mode === "measure" && mA && !mB) { const sv = mB; mB = at(e); render(); mB = sv; } });
   cv.addEventListener("pointerup", () => { drag = -1; });
+  cv.addEventListener("dblclick", e => { const p = at(e), i = pts.findIndex(q => Math.hypot(q[0] - p[0], q[1] - p[1]) < tolMm()); if (i >= 0) { pts.splice(i, 1); sel = -1; render(); } });
+  cv.addEventListener("keydown", e => { if ((e.key === "Delete" || e.key === "Backspace") && sel >= 0) { e.preventDefault(); pts.splice(sel, 1); sel = -1; render(); } });
+  function stopSim(){ cancelAnimationFrame(simRaf); simRaf = 0; simPose = null; simMsg = ""; trail = []; $("plStop").disabled = true; $("plSim").disabled = false; }
+  $("plStop").onclick = () => { stopSim(); render(); };
+  $("plSim").onclick = () => {
+    const sg = segs(); if (!sg.length) { simMsg = "אין מסלול להרצה"; render(); simMsg = ""; return; }
+    const V = Math.max(10, num("plV")), T = Math.max(10, num("plT")), st = start(), tl = []; let t = 0, h = st.h;
+    sg.forEach(s => { const dt = Math.abs(s.turn) / T; if (dt > 0) { tl.push({ t0: t, t1: t + dt, k: "turn", h0: h, h1: h + s.turn, s }); t += dt; h += s.turn; }
+      const dd = s.dist / V; tl.push({ t0: t, t1: t + dd, k: "go", h: s.h, s }); t += dd; });
+    const total = t, tm = target === null ? null : MIS[target]; trail = [[st.x, st.y]]; $("plStop").disabled = false; $("plSim").disabled = true;
+    const t0 = performance.now();
+    const frame = now => { const el = Math.min(total, (now - t0) / 1000), it = tl.find(x => el <= x.t1) || tl[tl.length - 1], f = it.t1 > it.t0 ? (el - it.t0) / (it.t1 - it.t0) : 1;
+      let pose; if (it.k === "turn") pose = { x: it.s.from[0], y: it.s.from[1], h: it.h0 + (it.h1 - it.h0) * f };
+      else pose = { x: it.s.from[0] + (it.s.to[0] - it.s.from[0]) * f, y: it.s.from[1] + (it.s.to[1] - it.s.from[1]) * f, h: it.h };
+      const hit = MIS.find(m => m !== tm && hitsModel(pose.x, pose.y, pose.h, m)), out = corners(pose.x, pose.y, pose.h).some(q => q[0] < 0 || q[1] < 0 || q[0] > FW || q[1] > FH);
+      simPose = pose; if (it.k === "go") trail.push([pose.x, pose.y]);
+      if (hit || out) { simPose.crash = true; simMsg = "פגיעה: " + (hit ? "דגם " + hit[0] : "יציאה מהמגרש") + " אחרי " + el.toFixed(1) + " שניות"; $("plStop").disabled = false; $("plSim").disabled = false; render(); return; }
+      simMsg = "סימולציה: " + el.toFixed(1) + " מתוך " + total.toFixed(1) + " שניות";
+      render(); if (el < total) simRaf = requestAnimationFrame(frame); else { simMsg = "הסתיים ב-" + total.toFixed(1) + " שניות (ללא פגיעות)"; $("plSim").disabled = false; render(); } };
+    simRaf = requestAnimationFrame(frame); };
   function setMode(m){ mode = m; mA = mB = null; $("plModePlan").setAttribute("aria-pressed", String(m === "plan")); $("plModeMeasure").setAttribute("aria-pressed", String(m === "measure")); render(); }
   $("plModePlan").onclick = () => setMode("plan"); $("plModeMeasure").onclick = () => setMode("measure");
-  $("plUndo").onclick = () => { pts.pop(); render(); }; $("plClear").onclick = () => { pts = []; target = null; mA = mB = null; render(); };
+  $("plUndo").onclick = () => { stopSim(); pts.pop(); sel = -1; render(); }; $("plClear").onclick = () => { stopSim(); pts = []; target = null; sel = -1; mA = mB = null; render(); };
   $("plSide").onchange = () => { $("plX").value = $("plSide").value === "L" ? 270 : FW - 270; $("plY").value = 980; render(); };
   ["plX","plY","plH","plW","plL","plAtt","plAF","plAS"].forEach(id => $(id).addEventListener("input", render));
   $("plSuggest").onclick = () => {
-    const i = +sel.value, m = MIS[i], d = dims(), st = start(), last = pts.length ? pts[pts.length - 1] : [st.x, st.y];
+    const i = +misSel.value, m = MIS[i], d = dims(), st = start(), last = pts.length ? pts[pts.length - 1] : [st.x, st.y];
     target = i; const dx = m[2] - last[0], dy = m[3] - last[1], len = Math.hypot(dx, dy) || 1, gap = d.L / 2 + d.F + 30;
     const end = [m[2] - dx / len * Math.max(gap, R * 0.6), m[3] - dy / len * Math.max(gap, R * 0.6)];
     const trial = list => { const saved = pts; pts = saved.concat(list); const ok = !warnings(segs()).some(w => w.includes("דגמים")); pts = saved; return ok; };
