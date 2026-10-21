@@ -1279,13 +1279,18 @@ if (PRACTICE) {
   const sol = document.getElementById("mSol"); if (sol) sol.closest("details").remove();
   const chip = document.createElement("span"); chip.textContent = "מצב תרגול"; chip.style.cssText = "margin-inline-start:auto;align-self:center;font-size:13px;font-weight:700;color:var(--accent);white-space:nowrap";
   document.querySelector("nav.tabs .wrap").appendChild(chip);
+} else {
+  const wrap = document.querySelector("nav.tabs .wrap"), mk = (t, f, first) => { const b = document.createElement("button"); b.textContent = t; b.onclick = f; b.style.cssText = "font-size:13px;border:1px solid var(--line);border-radius:8px;padding:6px 10px;margin-block:6px;background:var(--surface);color:var(--fg);white-space:nowrap;cursor:pointer" + (first ? ";margin-inline-start:auto" : ""); wrap.appendChild(b); return b; };
+  const base = () => location.origin + location.pathname + "?practice=true";
+  mk("פתח מצב תרגול", () => { location.href = base() + "#sim"; }, true);
+  const cp = mk("העתק קישור תרגול", () => { const u = base(); try { navigator.clipboard.writeText(u); } catch (e) { prompt("הקישור:", u); } cp.textContent = "הועתק"; setTimeout(() => { cp.textContent = "העתק קישור תרגול"; }, 1500); });
 }
 function showTab(name){
   if(!PAGES[name]) name = PRACTICE ? "sim" : "plan";
   for (const [k, id] of Object.entries(PAGES)) { $(id).classList.toggle("hidden", k !== name); $("t-" + k).setAttribute("aria-selected", String(k === name)); }
   if (name === "sim") drawIdle();
 }
-document.querySelectorAll("nav.tabs button").forEach(b => b.addEventListener("click", () => { showTab(b.dataset.tab); window.scrollTo(0, 0); }));
+document.querySelectorAll("nav.tabs button[data-tab]").forEach(b => b.addEventListener("click", () => { showTab(b.dataset.tab); window.scrollTo(0, 0); }));
 
 /* ---- canvas ---- */
 const cv = $("cv"), ctx = cv.getContext("2d");
