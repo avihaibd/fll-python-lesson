@@ -1569,7 +1569,7 @@ robot.stop()</pre><pre>if color.color() == Color.BLUE:
  `<h2>חידון: מתי הלולאה נגמרת?</h2><pre>while not force.pressed():
     robot.drive(150, 0)
 robot.stop()</pre><p>לולאת ה-<span class="code-inline">while</span> שלמעלה, זו שבשקף הקודם. מתי היא מפסיקה לחזור, והרובוט עובר לשורה <span class="code-inline">robot.stop()</span>?</p><div class="quiz"><button class="opt" data-ok="0">אחרי שלוש שניות</button><button class="opt" data-ok="1">כשחיישן המגע נלחץ</button><button class="opt" data-ok="0">אף פעם</button></div><p class="fb hidden">כשהחיישן נלחץ. התנאי "not force.pressed()" נכון כל עוד עוד לא לחצו. אפשר לראות בשקף הקודם.</p>`,
- `<h2>async, await ו-multitask</h2><pre class="runnable" data-w="8">async def drive_task():
+ `<h2>async, await ו-multitask</h2><pre class="runnable" data-w="8" data-rate="0.8">async def drive_task():
     await robot.straight(600)
 
 async def arm_task():
@@ -1627,9 +1627,9 @@ async function miniRun(pre, out, btn, loop){
   if (!r.frames) { cvs.hidden = true; miniBusy = false; btn.disabled = false; return; }
   const fr = r.frames, evs = r.evs;
   if (fr.length <= 3) { cvs.hidden = true; miniBusy = false; btn.disabled = false; mark(0, "cur"); return; }
-  let idx = 0, evk = -1; const t0 = performance.now();
+  let idx = 0, evk = -1; const t0 = performance.now(), rate = +pre.dataset.rate || 2;
   const tick = (now) => {
-    const st = (now - t0) * 2;
+    const st = (now - t0) * rate;
     while (idx < fr.length - 1 && fr[idx + 1][0] <= st) idx++;
     while (evk + 1 < evs.length && evs[evk + 1].fi <= idx) evk++;
     renderField(c2, cvs, w, fr, idx); mark(evk >= 0 ? evs[evk].line : 0, "cur");
