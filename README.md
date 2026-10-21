@@ -13,13 +13,15 @@ https://firstinspires.blob.core.windows.net/fll/challenge/2026-27/fll-challenge-
 
 ## מבנה הקוד
 
-העריכה נעשית בתיקיית `src/`, ו-`index.html` נבנה ממנה:
+`index.html` הוא קובץ המקור, והוא טוען ישירות את הקבצים מ-`src/`. אין שלב בנייה, ועורכים ישירות:
 
-- `src/page.html` – מבנה הדף (HTML)
+- `index.html` – מבנה הדף (HTML)
 - `src/style.css` – עיצוב
 - `src/app.js` – לוגיקת הממשק, החידון, המתכנן
 - `src/missions.js` – המשימות 1–10
 - `src/simcore.py` – מנוע הסימולטור (פייתון, רץ ב-Skulpt)
 - `src/seasonmap.jpg` – מפת העונה
 
-לבנייה מחדש: `python3 src/build.py` (יוצר את `index.html` בתיקיית השורש). יש לעשות commit גם ל-`index.html`, כי GitHub Pages מגיש אותו.
+לבדיקה מקומית צריך שרת (הדף טוען קבצים עם `fetch`, ולכן פתיחה ישירה של הקובץ לא תעבוד): `python3 -m http.server` ואז http://localhost:8000.
+
+אופציונלי: `python3 src/build.py` יוצר `bundle.html`, קובץ יחיד עצמאי שאפשר לשלוח או לפתוח ישירות.

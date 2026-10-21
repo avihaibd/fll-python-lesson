@@ -8,6 +8,5 @@ h = rd('index.html')
 h = re.sub(r'<link rel="stylesheet" href="(src/[^"]+)">', lambda m: '<style>\n' + rd(m[1]) + '</style>', h)
 sim = '<script>window.__SIMCORE = String.raw`' + rd('src/simcore.py') + '`;</script>\n'
 h = re.sub(r'<script src="(src/[^"]+)"></script>', lambda m: ('' if 'missions' not in m[1] else sim) + '<script>\n' + rd(m[1]) + '</script>', h)
-img = base64.b64encode(open(os.path.join(root, 'src/seasonmap.jpg'), 'rb').read()).decode()
-h = h.replace('"src/seasonmap.jpg"', '"data:image/jpeg;base64,' + img + '"')
+h = re.sub(r'"(src/maps/[^"]+\.jpg)"', lambda m: '"data:image/jpeg;base64,' + base64.b64encode(open(os.path.join(root, m[1]), 'rb').read()).decode() + '"', h)
 open(sys.argv[1] if len(sys.argv) > 1 else os.path.join(root, 'bundle.html'), 'w', encoding='utf-8').write(h)

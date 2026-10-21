@@ -38,7 +38,10 @@ const ZC = { RED: "#e0463a", GREEN: "#2f9e62", BLUE: "#2f6fe0", YELLOW: "#f0c32c
 let world = null, frames = [], idx = 0, raf = 0, speed = 1, running = false, result = null;
 function zoneAt(x, y, w = world){ for (const z of w.zones) if (x >= z.x && x <= z.x + z.w && y >= z.y && y <= z.y + z.h) return z.color; return "WHITE"; }
 let bgMode = "none", customImg = null, bgOp = 1;
-const seasonImg = new Image(); seasonImg.src = "src/seasonmap.jpg"; seasonImg.onload = () => { if (world) draw(); };
+const MAP_IMGS = {};
+MAPS.forEach(m => { const im = new Image(); im.src = m.file; im.onload = () => { if (world) draw(); }; MAP_IMGS[m.id] = im;
+  const o = document.createElement("option"); o.value = m.id; o.textContent = m.name; $("bgSel").insertBefore(o, $("bgSel").querySelector('[value="custom"]')); });
+const mapImg = MAP_IMGS[CURRENT_MAP]; // המפה הנוכחית, גם עבור מתכנן הריצה
 function setBgMode(m){ bgMode = m; $("bgSel").value = m; if (world) draw(); }
 $("bgSel").addEventListener("change", e => {
   if (e.target.value === "custom" && !customImg) { $("bgFile").click(); setBgMode(bgMode); return; }
@@ -62,7 +65,7 @@ function renderField(ctx, cv, world, frames, idx){
   for (let x = 0; x <= world.size[0]; x += 100) { ctx.moveTo(x * s, 0); ctx.lineTo(x * s, cv.height); }
   for (let y = 0; y <= world.size[1]; y += 100) { ctx.moveTo(0, y * s); ctx.lineTo(cv.width, y * s); }
   ctx.stroke();
-  const bg = cv.id !== "cv" ? null : (bgMode === "season" ? (seasonImg.naturalWidth ? seasonImg : null) : bgMode === "custom" ? customImg : null), useBg = !!bg;
+  const bg = cv.id !== "cv" ? null : (bgMode === "custom" ? customImg : (MAP_IMGS[bgMode] && MAP_IMGS[bgMode].naturalWidth ? MAP_IMGS[bgMode] : null)), useBg = !!bg;
   if (useBg) { ctx.globalAlpha = bgOp; ctx.drawImage(bg, 0, 0, cv.width, cv.height); ctx.globalAlpha = 1; }
   for (const z of world.zones) {
     if (useBg && z.color === "WHITE") continue;
@@ -106,7 +109,7 @@ function pick(id){
   $("hdr").textContent = HEADER;
   $("code").value = store.get("fll-code-" + cur.id) || cur.template; bps.clear(); onCodeChanged(); session = false; $("code").readOnly = false;
   $("console").textContent = ""; $("banner").className = "hidden";
-  setBgMode(cur.id === 10 ? "season" : "none"); setWorld(cur.world(rnd)); renderMissionBtns(); updateButtons();
+  setBgMode(cur.id === 10 ? CURRENT_MAP : "none"); setWorld(cur.world(rnd)); renderMissionBtns(); updateButtons();
 }
 function updateButtons(){ $("run").disabled = !ready || running; $("dbg").disabled = !ready || running; ["skip","stop","pause","step","stepBack"].forEach(i => $(i).disabled = !running); }
 
@@ -632,7 +635,7 @@ const TERMS = [
     const sig = pts.length + "|" + acts.length; if (sig !== actsSig) { actsSig = sig; buildActs(); }
     const sg = segs(), st = start();
     c.setTransform(1, 0, 0, 1, 0, 0); c.fillStyle = "#e7edf3"; c.fillRect(0, 0, cv.width, cv.height);
-    if (seasonImg.naturalWidth) c.drawImage(seasonImg, 0, 0, cv.width, cv.height);
+    if (mapImg.naturalWidth) c.drawImage(mapImg, 0, 0, cv.width, cv.height);
     c.strokeStyle = "rgba(255,255,255,.35)"; c.lineWidth = 1; c.beginPath();
     for (let x = 0; x <= FW; x += 200) { c.moveTo(x * S, 0); c.lineTo(x * S, cv.height); } for (let y = 0; y <= FH; y += 200) { c.moveTo(0, y * S); c.lineTo(cv.width, y * S); } c.stroke();
     MIS.forEach((m, i) => { c.beginPath(); c.arc(m[2] * S, m[3] * S, 13, 0, 7); c.fillStyle = i === target ? "#12805c" : "#e8402f"; c.fill(); c.fillStyle = "#fff"; c.font = "bold 11px Heebo"; c.textAlign = "center"; c.fillText(m[0], m[2] * S, m[3] * S + 4);
@@ -715,7 +718,7 @@ const TERMS = [
     pts = pts.concat(route); render();
   };
   $("plCopy").onclick = () => { const t = $("plCode").textContent; try { navigator.clipboard.writeText(t); } catch (e) { const a = document.createElement("textarea"); a.value = t; document.body.appendChild(a); a.select(); try { document.execCommand("copy"); } catch (x) {} a.remove(); } };
-  seasonImg.addEventListener("load", render); render();
+  mapImg.addEventListener("load", render); render();
 })();
 
 (window.__SIMCORE ? Promise.resolve(SIMCORE) : fetch("src/simcore.py").then(r => r.text())).then(t => {
