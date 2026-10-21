@@ -1566,7 +1566,9 @@ robot.straight(300)</pre><p>הרובוט מתחיל משמאל ומסתכל ימ
     robot.drive(150, 0)
 robot.stop()</pre><pre>if color.color() == Color.BLUE:
     print("מצאתי כחול!")</pre><p>הקיר לא תמיד באותו מקום (הריצו כמה פעמים), ולכן אי אפשר לנחש מספר.</p>`,
- `<h2>חידון: מתי הלולאה נגמרת?</h2><div class="quiz"><button class="opt" data-ok="0">אחרי שלוש שניות</button><button class="opt" data-ok="1">כשחיישן המגע נלחץ</button><button class="opt" data-ok="0">אף פעם</button></div><p class="fb hidden">כשהחיישן נלחץ. התנאי "not force.pressed()" נכון כל עוד עוד לא לחצו. אפשר לראות בשקף הקודם.</p><button class="btn gomission" data-m="4">למשימה 4</button>`,
+ `<h2>חידון: מתי הלולאה נגמרת?</h2><pre>while not force.pressed():
+    robot.drive(150, 0)
+robot.stop()</pre><p>לולאת ה-<span class="code-inline">while</span> שלמעלה, זו שבשקף הקודם. מתי היא מפסיקה לחזור, והרובוט עובר לשורה <span class="code-inline">robot.stop()</span>?</p><div class="quiz"><button class="opt" data-ok="0">אחרי שלוש שניות</button><button class="opt" data-ok="1">כשחיישן המגע נלחץ</button><button class="opt" data-ok="0">אף פעם</button></div><p class="fb hidden">כשהחיישן נלחץ. התנאי "not force.pressed()" נכון כל עוד עוד לא לחצו. אפשר לראות בשקף הקודם.</p>`,
  `<h2>async, await ו-multitask</h2><pre class="runnable" data-w="8">async def drive_task():
     await robot.straight(600)
 
