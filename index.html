@@ -1271,9 +1271,17 @@ const $ = (id) => document.getElementById(id);
 const store = { get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch(e){} } };
 
 /* ---- tabs ---- */
+const PRACTICE = /[?&]practice=(true|1)(&|#|$)/.test(location.search);
 const PAGES = { plan: "plan", slides: "slides-tab", videos: "videos-tab", terms: "terms-tab", sim: "sim", planner: "planner-tab", code: "code-tab", ideas: "ideas-tab" };
+if (PRACTICE) {
+  delete PAGES.plan;
+  ["plan", "t-plan"].forEach(id => { const e = document.getElementById(id); if (e) e.remove(); });
+  const sol = document.getElementById("mSol"); if (sol) sol.closest("details").remove();
+  const chip = document.createElement("span"); chip.textContent = "מצב תרגול"; chip.style.cssText = "margin-inline-start:auto;align-self:center;font-size:13px;font-weight:700;color:var(--accent);white-space:nowrap";
+  document.querySelector("nav.tabs .wrap").appendChild(chip);
+}
 function showTab(name){
-  if(!PAGES[name]) name = "plan";
+  if(!PAGES[name]) name = PRACTICE ? "sim" : "plan";
   for (const [k, id] of Object.entries(PAGES)) { $(id).classList.toggle("hidden", k !== name); $("t-" + k).setAttribute("aria-selected", String(k === name)); }
   if (name === "sim") drawIdle();
 }
@@ -1349,7 +1357,7 @@ function renderMissionBtns(){
 function pick(id){
   cancelAnimationFrame(raf); running = false;
   cur = MISSIONS.find(m => m.id === id);
-  $("mTitle").textContent = cur.id + ". " + cur.title; $("mDesc").textContent = cur.desc; $("mHint").textContent = cur.hint; $("mSol").textContent = cur.solution;
+  $("mTitle").textContent = cur.id + ". " + cur.title; $("mDesc").textContent = cur.desc; $("mHint").textContent = cur.hint; if ($("mSol")) $("mSol").textContent = cur.solution;
   $("hdr").textContent = HEADER;
   $("code").value = store.get("fll-code-" + cur.id) || cur.template; bps.clear(); onCodeChanged(); session = false; $("code").readOnly = false;
   $("console").textContent = ""; $("banner").className = "hidden";
