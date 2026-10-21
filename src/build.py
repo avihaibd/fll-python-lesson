@@ -1,17 +1,13 @@
 #!/usr/bin/env python3
-"""Build index.html from src/: python3 src/build.py  (run from anywhere)"""
-import base64, os, re
-d = os.path.dirname(os.path.abspath(__file__))
-rd = lambda f: open(os.path.join(d, f), encoding='utf-8').read()
-app = (rd('app.js').replace('/*@@MISSIONS@@*/', rd('missions.js'))
-       .replace('@@SIMCORE@@', rd('simcore.py'))
-       .replace('@@SEASONMAP@@', base64.b64encode(open(os.path.join(d, 'seasonmap.jpg'), 'rb').read()).decode()))
-page = rd('page.html').replace('/*@@CSS@@*/', rd('style.css')).replace('/*@@APP@@*/', app)
-i = page.index('</style>') + 8
-html = ('<!doctype html>\n<html lang="he" dir="rtl">\n<head>\n<meta charset="utf-8">\n'
-        '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
-        + page[:i].replace('<meta name="claude:viewport-fit-sides" content="cover">\n', '')
-        + '\n</head>\n<body>\n' + page[i:] + '\n</body>\n</html>\n')
-open(os.path.join(d, '..', 'index.html'), 'w', encoding='utf-8').write(html)
-if os.environ.get('FRAGMENT'):  # artifact variant (no doctype)
-    open(os.environ['FRAGMENT'], 'w', encoding='utf-8').write(page)
+"""Optional: bundle index.html + src/ into ONE self-contained file (bundle.html), e.g. to email it or open via file://.
+Usage: python3 src/build.py [out.html]"""
+import base64, os, re, sys
+root = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+rd = lambda f: open(os.path.join(root, f), encoding='utf-8').read()
+h = rd('index.html')
+h = re.sub(r'<link rel="stylesheet" href="(src/[^"]+)">', lambda m: '<style>\n' + rd(m[1]) + '</style>', h)
+sim = '<script>window.__SIMCORE = String.raw`' + rd('src/simcore.py') + '`;</script>\n'
+h = re.sub(r'<script src="(src/[^"]+)"></script>', lambda m: ('' if 'missions' not in m[1] else sim) + '<script>\n' + rd(m[1]) + '</script>', h)
+img = base64.b64encode(open(os.path.join(root, 'src/seasonmap.jpg'), 'rb').read()).decode()
+h = h.replace('"src/seasonmap.jpg"', '"data:image/jpeg;base64,' + img + '"')
+open(sys.argv[1] if len(sys.argv) > 1 else os.path.join(root, 'bundle.html'), 'w', encoding='utf-8').write(h)

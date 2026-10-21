@@ -1,5 +1,4 @@
-/*@@MISSIONS@@*/
-const SIMCORE = String.raw`@@SIMCORE@@`;
+let SIMCORE = window.__SIMCORE || ""; // נטען מ-src/simcore.py (או מוטמע בגרסת הקובץ-היחיד)
 const FILES = {
   "src/lib/pybricks/__init__.py": SIMCORE,
   "src/lib/pybricks/hubs.py": "from pybricks import PrimeHub\n",
@@ -39,7 +38,7 @@ const ZC = { RED: "#e0463a", GREEN: "#2f9e62", BLUE: "#2f6fe0", YELLOW: "#f0c32c
 let world = null, frames = [], idx = 0, raf = 0, speed = 1, running = false, result = null;
 function zoneAt(x, y, w = world){ for (const z of w.zones) if (x >= z.x && x <= z.x + z.w && y >= z.y && y <= z.y + z.h) return z.color; return "WHITE"; }
 let bgMode = "none", customImg = null, bgOp = 1;
-const seasonImg = new Image(); seasonImg.src = "data:image/jpeg;base64,@@SEASONMAP@@"; seasonImg.onload = () => { if (world) draw(); };
+const seasonImg = new Image(); seasonImg.src = "src/seasonmap.jpg"; seasonImg.onload = () => { if (world) draw(); };
 function setBgMode(m){ bgMode = m; $("bgSel").value = m; if (world) draw(); }
 $("bgSel").addEventListener("change", e => {
   if (e.target.value === "custom" && !customImg) { $("bgFile").click(); setBgMode(bgMode); return; }
@@ -719,4 +718,7 @@ const TERMS = [
   seasonImg.addEventListener("load", render); render();
 })();
 
-pick(1); initSkulpt(); showTab(location.hash.slice(1));
+(window.__SIMCORE ? Promise.resolve(SIMCORE) : fetch("src/simcore.py").then(r => r.text())).then(t => {
+  FILES["src/lib/pybricks/__init__.py"] = t;
+  pick(1); initSkulpt(); showTab(location.hash.slice(1));
+});
