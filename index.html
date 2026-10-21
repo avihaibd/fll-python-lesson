@@ -1271,7 +1271,7 @@ const $ = (id) => document.getElementById(id);
 const store = { get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch(e){} } };
 
 /* ---- tabs ---- */
-const PRACTICE = /[?&]practice=(true|1)(&|#|$)/.test(location.search);
+const PRACTICE = /[?&](practice=(true|1)|s=q7x2)(&|#|$)/.test(location.search);
 const PAGES = { plan: "plan", slides: "slides-tab", videos: "videos-tab", terms: "terms-tab", sim: "sim", planner: "planner-tab", code: "code-tab", ideas: "ideas-tab" };
 if (PRACTICE) {
   delete PAGES.plan;
@@ -1281,7 +1281,7 @@ if (PRACTICE) {
   document.querySelector("nav.tabs .wrap").appendChild(chip);
 } else {
   const wrap = document.querySelector("nav.tabs .wrap"), mk = (t, f, first) => { const b = document.createElement("button"); b.textContent = t; b.onclick = f; b.style.cssText = "font-size:13px;border:1px solid var(--line);border-radius:8px;padding:6px 10px;margin-block:6px;background:var(--surface);color:var(--fg);white-space:nowrap;cursor:pointer" + (first ? ";margin-inline-start:auto" : ""); wrap.appendChild(b); return b; };
-  const base = () => location.origin + location.pathname + "?practice=true";
+  const base = () => location.origin + location.pathname + "?s=q7x2";
   mk("פתח מצב תרגול", () => { location.href = base() + "#sim"; }, true);
   const cp = mk("העתק קישור תרגול", () => { const u = base(); try { navigator.clipboard.writeText(u); } catch (e) { prompt("הקישור:", u); } cp.textContent = "הועתק"; setTimeout(() => { cp.textContent = "העתק קישור תרגול"; }, 1500); });
 }
