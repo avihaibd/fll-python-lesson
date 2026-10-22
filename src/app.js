@@ -352,9 +352,9 @@ robot.straight(300)</pre><p>הרובוט מתחיל משמאל ומסתכל ימ
     robot.drive(150, 0)
 robot.stop()</pre><pre>if color.color() == Color.BLUE:
     print("מצאתי כחול!")</pre><p>הקיר לא תמיד באותו מקום (הריצו כמה פעמים), ולכן אי אפשר לנחש מספר.</p>`,
- `<h2>עכשיו אתם</h2><ul><li>פותחים את לשונית "סימולטור ותרגול".</li><li>משימות 1 עד 3 ו-9 לכולם. 4 עד 6 למי שמתקדם. 7, 8 ו-10 לאתגר.</li><li>נתקעתם? קודם רמז, אחר כך שאלה לחבר, ואז אלינו.</li><li>לחצו "דיבאג" כדי לראות איזו שורה רצה עכשיו.</li></ul>`,
- `<h2>הרחבות</h2><p>חומר לעיון עצמי. בדרך כלל לא מגיעים אליו בשיעור.</p><button class="btn primary skipend">דלגו לשקף האחרון</button>`,
- `<div class="xbadge">הרחבה · לעיון עצמי</div><h2>דיבאג על רובוט אמיתי</h2><p>על הרובוט אין "שורה אחרי שורה". במקום זה: נקודת עצירה שמחכה ללחיצה על הכפתור.</p><pre>def wfb():   # wait for button
+ `<h2>עכשיו אתם</h2><div class="two"><div><ul><li>סורקים את הקוד ונפתח הסימולטור והתרגול.</li><li>משימות 1 עד 3 ו-9 לכולם. 4 עד 6 למי שמתקדם. 7, 8 ו-10 לאתגר.</li><li>נתקעתם? קודם רמז, אחר כך שאלה לחבר, ואז אלינו.</li><li>לחצו "דיבאג" כדי לראות איזו שורה רצה עכשיו.</li></ul></div><div class="qr"><div class="qrimg"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" class="segno"><path fill="#fff" d="M0 0h37v37h-37z"/><path class="qrline" stroke="#000" d="M2 2.5h7m1 0h3m1 0h1m1 0h1m2 0h1m4 0h1m3 0h7m-33 1h1m5 0h1m1 0h1m8 0h6m3 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h1m3 0h1m2 0h1m3 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m2 0h4m2 0h3m1 0h4m1 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m1 0h4m1 0h3m1 0h3m2 0h1m1 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m2 0h2m1 0h1m1 0h1m1 0h2m2 0h1m1 0h3m1 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-22 1h4m4 0h2m1 0h2m-24 1h1m2 0h6m2 0h1m3 0h3m5 0h3m2 0h1m1 0h3m-31 1h2m1 0h1m1 0h3m4 0h2m2 0h2m1 0h3m4 0h4m-30 1h2m1 0h2m1 0h1m1 0h2m2 0h2m1 0h1m2 0h1m1 0h4m2 0h5m-32 1h1m2 0h1m2 0h3m4 0h2m1 0h1m2 0h1m2 0h2m2 0h1m2 0h2m-32 1h1m4 0h2m4 0h1m1 0h4m1 0h3m3 0h1m1 0h2m3 0h1m-30 1h1m4 0h5m1 0h1m8 0h2m1 0h1m1 0h1m1 0h2m-28 1h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h3m2 0h1m3 0h1m1 0h1m1 0h1m-30 1h2m1 0h2m1 0h1m3 0h1m1 0h1m4 0h1m3 0h2m1 0h1m1 0h1m1 0h2m1 0h1m-31 1h1m1 0h4m6 0h2m2 0h1m3 0h1m1 0h6m-30 1h2m1 0h1m1 0h1m2 0h2m1 0h2m1 0h2m2 0h3m1 0h1m3 0h1m1 0h1m1 0h3m-29 1h1m1 0h1m3 0h3m2 0h1m1 0h1m1 0h1m1 0h3m2 0h2m1 0h2m1 0h1m-33 1h2m3 0h1m2 0h1m1 0h2m3 0h2m2 0h2m3 0h1m1 0h1m1 0h5m-32 1h1m1 0h1m2 0h2m2 0h1m5 0h2m2 0h1m2 0h2m2 0h1m1 0h1m1 0h1m-32 1h2m3 0h1m1 0h2m1 0h3m1 0h2m1 0h1m1 0h1m3 0h1m1 0h1m2 0h1m-29 1h1m4 0h4m1 0h1m2 0h1m1 0h2m4 0h3m2 0h7m-33 1h1m1 0h3m3 0h2m1 0h1m5 0h3m2 0h1m1 0h2m1 0h1m2 0h3m-33 1h3m3 0h1m2 0h1m5 0h2m2 0h2m1 0h8m1 0h1m-24 1h1m1 0h1m1 0h1m1 0h2m2 0h1m5 0h1m3 0h1m1 0h1m-31 1h7m1 0h2m1 0h1m1 0h1m1 0h1m3 0h2m1 0h3m1 0h1m1 0h1m1 0h1m-31 1h1m5 0h1m1 0h1m1 0h1m3 0h2m2 0h2m2 0h3m3 0h5m-33 1h1m1 0h3m1 0h1m1 0h1m3 0h1m3 0h1m3 0h1m1 0h7m2 0h1m-32 1h1m1 0h3m1 0h1m1 0h2m1 0h3m1 0h1m3 0h5m1 0h1m1 0h1m3 0h2m-33 1h1m1 0h3m1 0h1m2 0h1m1 0h2m1 0h6m4 0h1m2 0h2m2 0h2m-33 1h1m5 0h1m2 0h1m2 0h1m2 0h1m3 0h2m2 0h1m1 0h8m-33 1h7m1 0h6m1 0h3m1 0h1m3 0h2m1 0h3"/></svg></div><p>avihaibd.github.io/fll-python-lesson</p></div></div>`,
+ `<h2>עיון עצמי</h2><p>ממשיכים אם יש כוח וזמן. אחרת, מדלגים לסוף והתלמידים לומדים לבד.</p><button class="btn primary skipend">דלגו לשקף האחרון</button>`,
+ `<div class="xbadge">עיון עצמי, או ממשיכים אם יש כוח וזמן</div><h2>דיבאג על רובוט אמיתי</h2><p>על הרובוט אין "שורה אחרי שורה". במקום זה: נקודת עצירה שמחכה ללחיצה על הכפתור.</p><pre>def wfb():   # wait for button
     while Button.CENTER not in hub.buttons.pressed(): wait(10)
     while hub.buttons.pressed(): wait(10)
 
@@ -362,9 +362,9 @@ robot.straight(400)
 wfb()   # הגיע לאן שציפינו?
 robot.turn(90)
 wfb()</pre><p>בודקים, לוחצים וממשיכים. כשהכול עובד מוחקים את ה-<span class="code-inline">wfb()</span>.</p>`,
- `<div class="xbadge">הרחבה · לעיון עצמי</div><h2>לולאה אנושית: ריבוע על הרצפה</h2><ul><li>מסמנים ריבוע על הרצפה בסרט. המתכנת.ת כותב.ת על הלוח תוכנית בלי לולאה: שמונה שורות.</li><li>הרובוט (עיניים עצומות) מבצע.</li></ul><p class="big">איך מקצרים את התוכנית?</p>`,
- `<div class="xbadge">הרחבה · לעיון עצמי</div><h2>multitask אנושי: שני דברים יחד</h2><ul><li>שני מתנדבים: הרובוט הולך חמישה צעדים, והזרוע מרימה יד למשך שלוש שניות.</li><li>סבב 1: אחד אחרי השני. סבב 2: שניהם יחד. מודדים זמן בשעון עצר בכל סבב.</li></ul><p class="big">איך הקוד יגיד "שניהם יחד"?</p>`,
- `<div class="xbadge">הרחבה · לעיון עצמי</div><h2>async, await ו-multitask</h2><pre class="runnable" data-w="8" data-rate="0.8">async def drive_task():
+ `<div class="xbadge">עיון עצמי, או ממשיכים אם יש כוח וזמן</div><h2>לולאה אנושית: ריבוע על הרצפה</h2><ul><li>מסמנים ריבוע על הרצפה בסרט. המתכנת.ת כותב.ת על הלוח תוכנית בלי לולאה: שמונה שורות.</li><li>הרובוט (עיניים עצומות) מבצע.</li></ul><p class="big">איך מקצרים את התוכנית?</p>`,
+ `<div class="xbadge">עיון עצמי, או ממשיכים אם יש כוח וזמן</div><h2>multitask אנושי: שני דברים יחד</h2><ul><li>שני מתנדבים: הרובוט הולך חמישה צעדים, והזרוע מרימה יד למשך שלוש שניות.</li><li>סבב 1: אחד אחרי השני. סבב 2: שניהם יחד. מודדים זמן בשעון עצר בכל סבב.</li></ul><p class="big">איך הקוד יגיד "שניהם יחד"?</p>`,
+ `<div class="xbadge">עיון עצמי, או ממשיכים אם יש כוח וזמן</div><h2>async, await ו-multitask</h2><pre class="runnable" data-w="8" data-rate="0.8">async def drive_task():
     await robot.straight(600)
 
 async def arm_task():
@@ -374,13 +374,13 @@ async def main():
     await multitask(drive_task(), arm_task())
 
 run_task(main())</pre><p>await: חכו שהפעולה תסתיים. multitask: שתי פעולות יחד. נסו להחליף ל-<span class="code-inline">await drive_task()</span> ואז <span class="code-inline">await arm_task()</span> ולהשוות זמן, במשימה 8.</p>`,
- `<div class="xbadge">הרחבה · לעיון עצמי</div><h2>דיוק: מהר או לאט?</h2><div class="two"><div><ul><li>התחלה והאטה עדינות מונעות החלקה, ולכן הרובוט נוסע ישר יותר.</li><li>מהר מפיל בעוצמה, לאט מפיל בעדינות. בוחרים מהירות לפי המשימה.</li><li>אחרי נסיעה מהירה ממתינים רגע לפני פנייה.</li></ul></div><div><p class="big">נסו: מהר ואז לאט</p><pre class="runnable" data-w="1">robot.settings(straight_speed=500)
+ `<div class="xbadge">עיון עצמי, או ממשיכים אם יש כוח וזמן</div><h2>דיוק: מהר או לאט?</h2><div class="two"><div><ul><li>התחלה והאטה עדינות מונעות החלקה, ולכן הרובוט נוסע ישר יותר.</li><li>מהר מפיל בעוצמה, לאט מפיל בעדינות. בוחרים מהירות לפי המשימה.</li><li>אחרי נסיעה מהירה ממתינים רגע לפני פנייה.</li></ul></div><div><p class="big">נסו: מהר ואז לאט</p><pre class="runnable" data-w="1">robot.settings(straight_speed=500)
 robot.straight(400)     # מהר
 robot.settings(straight_speed=150)
 robot.straight(100)     # לאט, בדיוק
 wait(150)
 robot.turn(90)</pre></div></div>`,
- `<div class="xbadge">הרחבה · לעיון עצמי</div><h2>סימולציה מול המציאות</h2><ul><li>בסימולטור אין חיכוך, סחיפה או סוללה חלשה.</li><li>ברובוט האמיתי הגלגלים מחליקים והכיוון זז.</li><li>לכן בקוד של הקבוצה יש גירוסקופ ובקר PID שמתקן את הכיוון.</li></ul>`,
+ `<div class="xbadge">עיון עצמי, או ממשיכים אם יש כוח וזמן</div><h2>סימולציה מול המציאות</h2><ul><li>בסימולטור אין חיכוך, סחיפה או סוללה חלשה.</li><li>ברובוט האמיתי הגלגלים מחליקים והכיוון זז.</li><li>לכן בקוד של הקבוצה יש גירוסקופ ובקר PID שמתקן את הכיוון.</li></ul>`,
  `<h2>הצעדים הבאים</h2><ul><li>התקנת VS Code ו-Pybricks, וחיבור רובוט אמיתי.</li><li>להריץ את הקוד שכתבתם היום על הרובוט.</li><li>להכיר את הקוד של שנה שעברה: מחלקת Robot ושלט.</li><li>להמשיך לבד: קורסי פייתון בעברית בקמפוס IL (בלשונית הסרטונים והחומרים).</li></ul><p class="big">כרטיס יציאה: מילה אחת על מה שלמדתי, ודבר אחד שלא ברור.</p>`,
 ];
 /* ---- runnable examples inside slides ---- */

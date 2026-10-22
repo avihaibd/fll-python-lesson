@@ -210,3 +210,6 @@ table.api{min-width:0}table.api td{padding:7px 12px;font-size:14px}table.api td:
 .slide .vol{text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
 .slide .vol .hand{font-size:clamp(80px,22vw,220px);line-height:1}
 .slide .vol h2{font-size:clamp(28px,6vw,64px)}
+.slide .qr{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.slide .qrimg{background:#fff;padding:8px;border-radius:10px;width:clamp(120px,22vw,230px)}
+.slide .qrimg svg{display:block;width:100%;height:auto}
