@@ -216,6 +216,9 @@ table.api{min-width:0}table.api td{padding:7px 12px;font-size:14px}table.api td:
 .slide .runout canvas{max-height:34vh;object-fit:contain}
 .slide.title .robotpic{height:clamp(90px,28vh,230px);width:auto;align-self:flex-start;border-radius:12px;border:3px solid var(--brand-fg);margin-top:8px}
 .xbadge{align-self:flex-start;font:600 clamp(11px,1.4vw,14px) var(--f-head);background:var(--brand);color:var(--brand-fg);border-radius:999px;padding:2px 12px}
+.slide .vol{text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
+.slide .vol .hand{font-size:clamp(80px,22vw,220px);line-height:1}
+.slide .vol h2{font-size:clamp(28px,6vw,64px)}
 </style>
 </head>
 <body>
@@ -1628,6 +1631,7 @@ robot.turn(90)</pre><p>לחצו הרץ. השורה הצהובה היא מה שה
  `<h2>נחשו לפני שמריצים</h2><pre class="runnable" data-w="1">robot.straight(500)
 robot.turn(90)
 robot.straight(300)</pre><p>הרובוט מתחיל משמאל ומסתכל ימינה. איפה הוא יסיים: למעלה, למטה או ימינה? הרימו יד, ואז לחצו "הרץ".</p>`,
+ `<div class="vol"><div class="hand">✋</div><h2>מי מתנדב.ת?</h2></div>`,
  `<h2>הרובוט האנושי: עיניים עצומות</h2><ul><li>מתנדב.ת אחד.ת הוא הרובוט וסוגר.ת עיניים. מתנדב.ת שני.ה הוא המתכנת.ת ונותן.ת פקודות.</li><li>פקודות מותרות: "צעד קדימה" עם מספר, "פנה ימינה", "פנה שמאלה". אין "קצת", ואין "לך לכיסא".</li><li>היעד: הכיסא, בלי לעבור את השולחן. שאר הכיתה כותבת את התוכנית על הלוח.</li></ul>`,
  `<h2>לולאות: לא כותבים אותו דבר ארבע פעמים</h2><pre class="runnable" data-w="3">for i in range(4):
     robot.straight(400)
@@ -1635,6 +1639,7 @@ robot.straight(300)</pre><p>הרובוט מתחיל משמאל ומסתכל ימ
  `<h2>מצאו את הבאג</h2><pre class="runnable" data-w="3">for i in range(4)
     robot.straight(400)
     robot.turn(90)</pre><p>הרובוט לא זז ויש שגיאה. מה חסר?</p><button class="btn reveal">הראו תשובה</button><p class="answer note hidden">נקודתיים בסוף שורת ה-for. פייתון כותבת SyntaxError ומסמנת את השורה.</p>`,
+ `<div class="vol"><div class="hand">✋</div><h2>מי מתנדב.ת?</h2></div>`,
  `<h2>חיישן אנושי: ללכת עד שנוגעים</h2><ul><li>הרובוט (עיניים עצומות) הולך קדימה עד שמישהו נוגע לו בכתף, ואז עוצר מיד.</li><li>המתכנת.ת לא נותן.ת מספר צעדים. הפקודה היחידה: "קדימה עד שנוגעים".</li><li>בכל סבב ה"קיר" (תלמיד עם ידיים מושטות) עומד במרחק אחר.</li></ul><p class="big">איך אומרים לרובוט מתי לעצור?</p>`,
  `<h2>חיישנים: הרובוט מחליט</h2><pre class="runnable" data-w="4">while not force.pressed():
     robot.drive(150, 0)
@@ -1650,7 +1655,9 @@ robot.straight(400)
 wfb()   # הגיע לאן שציפינו?
 robot.turn(90)
 wfb()</pre><p>בודקים, לוחצים וממשיכים. כשהכול עובד מוחקים את ה-<span class="code-inline">wfb()</span>.</p>`,
+ `<div class="xbadge">הרחבה · לעיון עצמי</div><div class="vol"><div class="hand">✋</div><h2>מי מתנדב.ת?</h2></div>`,
  `<div class="xbadge">הרחבה · לעיון עצמי</div><h2>לולאה אנושית: ריבוע על הרצפה</h2><ul><li>מסמנים ריבוע על הרצפה בסרט. המתכנת.ת כותב.ת על הלוח תוכנית בלי לולאה: שמונה שורות.</li><li>הרובוט (עיניים עצומות) מבצע.</li></ul><p class="big">איך מקצרים את התוכנית?</p>`,
+ `<div class="xbadge">הרחבה · לעיון עצמי</div><div class="vol"><div class="hand">✋</div><h2>מי מתנדב.ת?</h2></div>`,
  `<div class="xbadge">הרחבה · לעיון עצמי</div><h2>multitask אנושי: שני דברים יחד</h2><ul><li>שני מתנדבים: הרובוט הולך חמישה צעדים, והזרוע מרימה יד למשך שלוש שניות.</li><li>סבב 1: אחד אחרי השני. סבב 2: שניהם יחד. מודדים זמן בשעון עצר בכל סבב.</li></ul><p class="big">איך הקוד יגיד "שניהם יחד"?</p>`,
  `<div class="xbadge">הרחבה · לעיון עצמי</div><h2>async, await ו-multitask</h2><pre class="runnable" data-w="8" data-rate="0.8">async def drive_task():
     await robot.straight(600)

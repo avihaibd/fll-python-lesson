@@ -207,3 +207,6 @@ table.api{min-width:0}table.api td{padding:7px 12px;font-size:14px}table.api td:
 .slide .runout canvas{max-height:34vh;object-fit:contain}
 .slide.title .robotpic{height:clamp(90px,28vh,230px);width:auto;align-self:flex-start;border-radius:12px;border:3px solid var(--brand-fg);margin-top:8px}
 .xbadge{align-self:flex-start;font:600 clamp(11px,1.4vw,14px) var(--f-head);background:var(--brand);color:var(--brand-fg);border-radius:999px;padding:2px 12px}
+.slide .vol{text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
+.slide .vol .hand{font-size:clamp(80px,22vw,220px);line-height:1}
+.slide .vol h2{font-size:clamp(28px,6vw,64px)}
