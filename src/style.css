@@ -192,6 +192,9 @@ table.api{min-width:0}table.api td{padding:7px 12px;font-size:14px}table.api td:
 
 .brand{background:linear-gradient(90deg,#d6177f,#ff5fae);color:#fff}
 .brand .wrap{display:flex;align-items:center;gap:12px;padding-block:8px}
-.brand .logo{height:36px;width:auto;display:block}
+.brand .logo{height:48px;width:auto;display:block}
 .brand .bn{font:600 18px var(--f-head);letter-spacing:.01em}.brand .bn b{font-weight:700;opacity:.9}
 .brand .bs{font-size:13px;opacity:.85;margin-inline-start:auto}
+.brand .partners{margin-inline-start:auto;display:flex;align-items:center;gap:14px;background:#fff;border-radius:12px;padding:5px 12px}
+.brand .partners img{height:46px;width:auto;display:block}
+@media(max-width:620px){.brand .bn{font-size:15px}.brand .partners{gap:8px;padding:4px 8px}.brand .partners img{height:24px}.brand .logo{height:38px}}
