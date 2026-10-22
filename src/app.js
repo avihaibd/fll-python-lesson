@@ -76,7 +76,7 @@ function renderField(ctx, cv, world, frames, idx){
   ctx.fillStyle = "#3b4a5c"; for (const w of world.walls) { if (w.avoid || w.target) { ctx.globalAlpha = .55; ctx.fillStyle = w.target ? "#12805c" : "#c62828"; } ctx.fillRect(w.x * s, w.y * s, w.w * s, w.h * s); ctx.globalAlpha = 1; ctx.fillStyle = "#3b4a5c"; if (w.label) { ctx.fillStyle = "#fff"; ctx.font = "bold 14px Heebo, sans-serif"; ctx.textAlign = "center"; ctx.fillText(w.label, (w.x + w.w / 2) * s, (w.y + w.h / 2 + 5) * s); ctx.fillStyle = "#3b4a5c"; } }
   ctx.strokeStyle = "#3b4a5c"; ctx.lineWidth = 4; ctx.strokeRect(0, 0, cv.width, cv.height);
   const f = frames[idx] || frames[0];
-  ctx.strokeStyle = "rgba(232,64,47,.65)"; ctx.lineWidth = 2; ctx.beginPath();
+  ctx.strokeStyle = "rgba(214,23,127,.65)"; ctx.lineWidth = 2; ctx.beginPath();
   for (let i = 0; i <= idx; i += 2) { const p = frames[i]; i === 0 ? ctx.moveTo(p[1] * s, p[2] * s) : ctx.lineTo(p[1] * s, p[2] * s); }
   ctx.lineTo(f[1] * s, f[2] * s); ctx.stroke();
   ctx.save(); ctx.translate(f[1] * s, f[2] * s); ctx.rotate(f[3] * Math.PI / 180); ctx.scale(s, s);
@@ -84,7 +84,7 @@ function renderField(ctx, cv, world, frames, idx){
   ctx.fillStyle = "#222"; ctx.fillRect(-70, -50, 12, 70); ctx.fillRect(58, -50, 12, 70);
   ctx.fillStyle = f[4] ? "#ff3b30" : "#8a97a6"; ctx.fillRect(-40, -90, 80, 12);
   ctx.save(); ctx.translate(-50, -70); ctx.rotate(Math.PI + (f[5] || 0) * Math.PI / 180); ctx.fillStyle = "#f59e0b"; ctx.fillRect(0, -7, 90, 14); ctx.restore();
-  ctx.fillStyle = "#e8402f"; ctx.beginPath(); ctx.moveTo(0, -62); ctx.lineTo(-18, -28); ctx.lineTo(18, -28); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = "#d6177f"; ctx.beginPath(); ctx.moveTo(0, -62); ctx.lineTo(-18, -28); ctx.lineTo(18, -28); ctx.closePath(); ctx.fill();
   ctx.fillStyle = ZC[zoneAt(f[1], f[2], world)]; ctx.strokeStyle = "#fff"; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(0, 18, 18, 0, 7); ctx.fill(); ctx.stroke();
   ctx.restore();
 }
@@ -638,14 +638,14 @@ const TERMS = [
     if (mapImg.naturalWidth) c.drawImage(mapImg, 0, 0, cv.width, cv.height);
     c.strokeStyle = "rgba(255,255,255,.35)"; c.lineWidth = 1; c.beginPath();
     for (let x = 0; x <= FW; x += 200) { c.moveTo(x * S, 0); c.lineTo(x * S, cv.height); } for (let y = 0; y <= FH; y += 200) { c.moveTo(0, y * S); c.lineTo(cv.width, y * S); } c.stroke();
-    MIS.forEach((m, i) => { c.beginPath(); c.arc(m[2] * S, m[3] * S, 13, 0, 7); c.fillStyle = i === target ? "#12805c" : "#e8402f"; c.fill(); c.fillStyle = "#fff"; c.font = "bold 11px Heebo"; c.textAlign = "center"; c.fillText(m[0], m[2] * S, m[3] * S + 4);
+    MIS.forEach((m, i) => { c.beginPath(); c.arc(m[2] * S, m[3] * S, 13, 0, 7); c.fillStyle = i === target ? "#12805c" : "#d6177f"; c.fill(); c.fillStyle = "#fff"; c.font = "bold 11px Heebo"; c.textAlign = "center"; c.fillText(m[0], m[2] * S, m[3] * S + 4);
       if (i === target) { c.strokeStyle = "#12805c"; c.setLineDash([4, 3]); c.beginPath(); c.arc(m[2] * S, m[3] * S, R * S, 0, 7); c.stroke(); c.setLineDash([]); } });
     const poly = (x, y, h, fill, stroke) => { const q = corners(x, y, h); c.beginPath(); q.forEach((p, i) => i ? c.lineTo(p[0] * S, p[1] * S) : c.moveTo(p[0] * S, p[1] * S)); c.closePath(); c.fillStyle = fill; c.fill(); c.strokeStyle = stroke; c.lineWidth = 1.5; c.stroke();
       const a = rad(h); c.beginPath(); c.moveTo(x * S, y * S); c.lineTo((x + Math.sin(a) * 60) * S, (y - Math.cos(a) * 60) * S); c.stroke(); };
     c.strokeStyle = "#0b2447"; c.lineWidth = 3; c.beginPath(); c.moveTo(st.x * S, st.y * S); pts.forEach(p => c.lineTo(p[0] * S, p[1] * S)); c.stroke();
     sg.forEach(s => poly(s.to[0], s.to[1], s.h, "rgba(11,36,71,.15)", "#0b2447"));
-    poly(st.x, st.y, st.h, "rgba(232,64,47,.3)", "#e8402f");
-    pts.forEach((p, i) => { c.beginPath(); c.arc(p[0] * S, p[1] * S, 8, 0, 7); c.fillStyle = i === sel ? "#e8402f" : "#0b2447"; c.fill(); c.fillStyle = "#fff"; c.font = "bold 10px Heebo"; c.textAlign = "center"; c.fillText(i + 1, p[0] * S, p[1] * S + 3.5); });
+    poly(st.x, st.y, st.h, "rgba(214,23,127,.3)", "#d6177f");
+    pts.forEach((p, i) => { c.beginPath(); c.arc(p[0] * S, p[1] * S, 8, 0, 7); c.fillStyle = i === sel ? "#d6177f" : "#0b2447"; c.fill(); c.fillStyle = "#fff"; c.font = "bold 10px Heebo"; c.textAlign = "center"; c.fillText(i + 1, p[0] * S, p[1] * S + 3.5); });
     const mk = (pt, n) => { const q = pt || [st.x, st.y]; c.beginPath(); c.arc(q[0] * S + 14, q[1] * S - 14, 9, 0, 7); c.fillStyle = "#a15c00"; c.fill(); c.fillStyle = "#fff"; c.font = "bold 10px Heebo"; c.textAlign = "center"; c.fillText("M" + (n > 1 ? n : ""), q[0] * S + 14, q[1] * S - 11); };
     [null].concat(pts).forEach(pt => { const n = acts.filter(a => a.pt === pt).length; if (n) mk(pt, n); });
     if (trail.length > 1) { c.strokeStyle = "#a15c00"; c.lineWidth = 2; c.beginPath(); trail.forEach((q, i) => i ? c.lineTo(q[0] * S, q[1] * S) : c.moveTo(q[0] * S, q[1] * S)); c.stroke(); }

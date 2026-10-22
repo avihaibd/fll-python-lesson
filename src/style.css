@@ -1,15 +1,15 @@
 /* Layout: sticky tab bar; "plan" is a reading column with a timeline table; "sim" is a two-column workbench (field + code) that stacks on phones. */
 :root{
   --bg:#f3f5f8; --surface:#ffffff; --fg:#13202e; --muted:#566678; --line:#d8dfe7;
-  --accent:#e8402f; --accent-fg:#ffffff; --ink:#0b2447; --soft:#e9eef6; --ok:#12805c; --bad:#c62828; --warn:#a15c00;
+  --accent:#d6177f; --accent-fg:#ffffff; --ink:#0b2447; --soft:#e9eef6; --ok:#12805c; --bad:#c62828; --warn:#a15c00;
   --code-bg:#0e1a2b; --code-fg:#dbe7f5; --code-dim:#7f95b0;
   --f-body:'Heebo',system-ui,sans-serif; --f-head:'Rubik','Heebo',system-ui,sans-serif; --f-mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0c131c; --surface:#142030; --fg:#e5edf6; --muted:#9db0c4; --line:#263548; --accent:#ff6a57; --accent-fg:#1a0a07;
+  --bg:#0c131c; --surface:#142030; --fg:#e5edf6; --muted:#9db0c4; --line:#263548; --accent:#ff5fae; --accent-fg:#2a0617;
   --ink:#9fc2ff; --soft:#1b2b40; --ok:#4cc79a; --bad:#ff8a80; --warn:#f0b35a; --code-bg:#09111b; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0c131c; --surface:#142030; --fg:#e5edf6; --muted:#9db0c4; --line:#263548; --accent:#ff6a57; --accent-fg:#1a0a07;
+  --bg:#0c131c; --surface:#142030; --fg:#e5edf6; --muted:#9db0c4; --line:#263548; --accent:#ff5fae; --accent-fg:#2a0617;
   --ink:#9fc2ff; --soft:#1b2b40; --ok:#4cc79a; --bad:#ff8a80; --warn:#f0b35a; --code-bg:#09111b; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--f-body);margin:0}
@@ -189,3 +189,9 @@ details.hdr pre{opacity:.75;font-size:12.5px}
 #status{color:var(--muted);font-size:14px}
 table.api{min-width:0}table.api td{padding:7px 12px;font-size:14px}table.api td:first-child{direction:ltr;text-align:left;font-family:var(--f-mono);font-size:13px;white-space:nowrap}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+
+.brand{background:linear-gradient(90deg,#d6177f,#ff5fae);color:#fff}
+.brand .wrap{display:flex;align-items:center;gap:12px;padding-block:8px}
+.brand .logo{height:36px;width:auto;display:block}
+.brand .bn{font:600 18px var(--f-head);letter-spacing:.01em}.brand .bn b{font-weight:700;opacity:.9}
+.brand .bs{font-size:13px;opacity:.85;margin-inline-start:auto}
