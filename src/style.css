@@ -199,7 +199,11 @@ table.api{min-width:0}table.api td{padding:7px 12px;font-size:14px}table.api td:
 .brand .partners img{height:46px;width:auto;display:block}
 @media(max-width:620px){.brand .bn{font-size:15px}.brand .partners{gap:8px;padding:4px 8px}.brand .partners img{height:24px}.brand .logo{height:38px}}
 .sbrand{position:absolute;inset-inline-start:clamp(12px,2vw,24px);bottom:8px;display:flex;align-items:center;gap:8px;font:600 clamp(11px,1.4vw,15px) var(--f-head);color:var(--muted);text-shadow:none}
-.sbrand img{height:clamp(22px,3vw,34px);width:auto}
+.sbrand img{height:clamp(22px,3vw,34px);width:auto;background:var(--brand);border-radius:8px;padding:3px}
 .slide.title .sbrand{color:var(--brand-fg)}
 .slide.title .sbrand img{background:#fff;border-radius:8px;padding:3px}
 .slide{border-top:8px solid var(--brand)}
+.slide>*{flex-shrink:0}
+.slide .runout canvas{max-height:34vh;object-fit:contain}
+.slide.title .robotpic{height:clamp(90px,28vh,230px);width:auto;align-self:flex-start;border-radius:12px;border:3px solid var(--brand-fg);margin-top:8px}
+.xbadge{align-self:flex-start;font:600 clamp(11px,1.4vw,14px) var(--f-head);background:var(--brand);color:var(--brand-fg);border-radius:999px;padding:2px 12px}

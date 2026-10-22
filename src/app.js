@@ -312,10 +312,10 @@ document.querySelectorAll("[data-speed]").forEach(b => b.addEventListener("click
 /* ---- slides ---- */
 const vid = (u, t) => '<a class="vidlink" href="' + u + '" target="_blank" rel="noopener">סרטון: ' + t + '</a>';
 const SLIDES = [
- `<div class="slide title"><h2>פייתון לרובוט</h2><p>שיעור הכרות לקבוצת FLL: למה תוכנה, ואיך כותבים אותה</p></div>`,
- `<h2>מי מזיז את הרובוט?</h2><div class="two"><div><p class="big">בשלט</p><p>אנחנו מחליטים בכל רגע. מתעייפים, מפספסים, לא חוזרים על אותו דבר.</p></div><div><p class="big">בתוכנה</p><p>החלטנו פעם אחת. הרובוט עושה את זה 10 פעמים אותו דבר.</p></div></div><p>מי מצליח לנסוע בדיוק 50 ס"מ, עשר פעמים ברצף, ביד?</p>${vid("https://www.youtube.com/watch?v=QAUuk_v2c_o", "בקר Xbox עם Spike Prime")}`,
+ `<div class="slide title"><h2>פייתון לרובוט</h2><p>שיעור הכרות לקבוצת FLL: למה תוכנה, ואיך כותבים אותה</p><img class="robotpic" src="src/robot.jpg" alt="הרובוט של הקבוצה" onerror="this.remove()"></div>`,
+ `<h2>מי מזיז את הרובוט?</h2><div class="two"><div><p class="big">בשלט</p><p>אנחנו מחליטים בכל רגע. מתעייפים, מפספסים, לא חוזרים על אותו דבר.</p></div><div><p class="big">בתוכנה</p><p>החלטנו פעם אחת. הרובוט עושה את זה 10 פעמים אותו דבר.</p></div></div><p>מי מצליח לנסוע בדיוק 50 ס"מ, עשר פעמים ברצף, ביד?</p>`,
  `<h2>מה תוכנה נותנת לנו</h2><ul><li><b>דיוק:</b> 500 מילימטר הם תמיד 500 מילימטר.</li><li><b>חזרתיות:</b> אותה משימה, בכל סיבוב, בלי לעייף.</li><li><b>החלטות:</b> אם החיישן רואה קיר, עוצרים. אם רואה כחול, מפסיקים.</li></ul>`,
- `<h2>הדרך מהמקלדת למנוע</h2><div class="flow" style="font-size:clamp(14px,2.2vw,22px)"><span>כותבים קוד</span><i>←</i><span>VS Code / Pybricks</span><i>←</i><span>בלוטות'</span><i>←</i><span>בקר Spike Prime</span><i>←</i><span>מנועים וחיישנים</span></div><p>המחשב עושה בדיוק מה שכתוב, שורה אחרי שורה, מלמעלה למטה.</p>${vid("https://www.youtube.com/watch?v=1YSpXzGSiEs", "למה משתמשים ב-Pybricks ב-FLL")}`,
+ `<h2>הדרך מהמקלדת למנוע</h2><div class="flow" style="font-size:clamp(14px,2.2vw,22px)"><span>כותבים קוד</span><i>←</i><span>VS Code / Pybricks</span><i>←</i><span>בלוטות'</span><i>←</i><span>בקר Spike Prime</span><i>←</i><span>מנועים וחיישנים</span></div><p>המחשב עושה בדיוק מה שכתוב, שורה אחרי שורה, מלמעלה למטה.</p>`,
  `<h2>פייתון בשלוש דקות</h2><pre class="runnable" data-w="1"># הערה: הרובוט מתעלם ממנה
 print("שלום רובוט!")     # הדפסה
 speed = 200               # משתנה: שם לערך
@@ -331,34 +331,38 @@ print(f"מרחק: {dist} mm")        # 2. f-string</pre><p>גם <span class="cod
  `<h2>פקודות נסיעה</h2><pre class="runnable" data-w="1">robot.straight(500)   # קדימה, במילימטרים
 robot.turn(90)        # פנייה, במעלות (ימינה)
 robot.turn(-90)       # שמאלה</pre><p>המעבר מכאן לרובוט האמיתי: אותן פקודות בדיוק.</p>`,
- `<h2>הרובוט מריץ שורה אחרי שורה</h2><pre class="runnable" data-w="3" data-auto="1">robot.straight(400)
+ `<h2>הרובוט מריץ שורה אחרי שורה</h2><pre class="runnable" data-w="3">robot.straight(400)
 robot.turn(90)
 robot.straight(400)
-robot.turn(90)</pre><p>השורה הצהובה היא מה שהרובוט עושה עכשיו. ההדגמה חוזרת על עצמה.</p>`,
+robot.turn(90)</pre><p>לחצו הרץ. השורה הצהובה היא מה שהרובוט עושה עכשיו.</p>`,
  `<h2>נחשו לפני שמריצים</h2><pre class="runnable" data-w="1">robot.straight(500)
 robot.turn(90)
 robot.straight(300)</pre><p>הרובוט מתחיל משמאל ומסתכל ימינה. איפה הוא יסיים: למעלה, למטה או ימינה? הרימו יד, ואז לחצו "הרץ".</p>`,
- `<h2>הרובוט האנושי: עיניים עצומות</h2><div class="two"><div><ul><li>מתנדב.ת אחד.ת הוא הרובוט וסוגר.ת עיניים. מתנדב.ת שני.ה הוא המתכנת.ת ונותן.ת פקודות.</li><li>פקודות מותרות: "צעד קדימה" עם מספר, "פנה ימינה", "פנה שמאלה". אין "קצת", ואין "לך לכיסא".</li><li>היעד: הכיסא, בלי לעבור את השולחן. שאר הכיתה כותבת את התוכנית על הלוח.</li></ul></div><div><p class="big">אחרי הניסוי</p><ul><li>מה קרה כשחסר מספר צעדים?</li><li>מה קרה כשהפקודה לא הייתה מדויקת?</li><li>הרובוט לא רואה: איפה היה עוזר חיישן?</li><li>מחליפים תפקידים ומנסים שוב.</li></ul></div></div>`,
+ `<h2>הרובוט האנושי: עיניים עצומות</h2><ul><li>מתנדב.ת אחד.ת הוא הרובוט וסוגר.ת עיניים. מתנדב.ת שני.ה הוא המתכנת.ת ונותן.ת פקודות.</li><li>פקודות מותרות: "צעד קדימה" עם מספר, "פנה ימינה", "פנה שמאלה". אין "קצת", ואין "לך לכיסא".</li><li>היעד: הכיסא, בלי לעבור את השולחן. שאר הכיתה כותבת את התוכנית על הלוח.</li></ul>`,
  `<h2>לולאות: לא כותבים אותו דבר ארבע פעמים</h2><pre class="runnable" data-w="3">for i in range(4):
     robot.straight(400)
-    robot.turn(90)</pre><p>נקודתיים בסוף השורה, וארבעה רווחים לפני כל שורה בתוך הלולאה.</p>`, 
- `<h2>לולאה אנושית: ריבוע על הרצפה</h2><div class="two"><div><ul><li>מסמנים ריבוע על הרצפה בסרט. המתכנת.ת כותב.ת על הלוח תוכנית בלי לולאה: שמונה שורות.</li><li>עכשיו מקצרים: "חזור 4 פעמים: 3 צעדים, פנה ימינה".</li><li>הרובוט (עיניים עצומות) מבצע. אחר כך משנים ל-3 חזרות ובודקים מה יצא.</li></ul></div><div><p class="big">בקוד</p><pre>for i in range(4):
-    robot.straight(300)
-    robot.turn(90)</pre><ul><li>כמה שורות חסכנו?</li><li>איך מקבלים משולש?</li></ul></div></div>`,
+    robot.turn(90)</pre><p>נקודתיים בסוף השורה, וארבעה רווחים לפני כל שורה בתוך הלולאה.</p>`,
  `<h2>מצאו את הבאג</h2><pre class="runnable" data-w="3">for i in range(4)
     robot.straight(400)
     robot.turn(90)</pre><p>הרובוט לא זז ויש שגיאה. מה חסר?</p><button class="btn reveal">הראו תשובה</button><p class="answer note hidden">נקודתיים בסוף שורת ה-for. פייתון כותבת SyntaxError ומסמנת את השורה.</p>`,
+ `<h2>חיישן אנושי: ללכת עד שנוגעים</h2><ul><li>הרובוט (עיניים עצומות) הולך קדימה עד שמישהו נוגע לו בכתף, ואז עוצר מיד.</li><li>המתכנת.ת לא נותן.ת מספר צעדים. הפקודה היחידה: "קדימה עד שנוגעים".</li><li>בכל סבב ה"קיר" (תלמיד עם ידיים מושטות) עומד במרחק אחר.</li></ul><p class="big">איך אומרים לרובוט מתי לעצור?</p>`,
  `<h2>חיישנים: הרובוט מחליט</h2><pre class="runnable" data-w="4">while not force.pressed():
     robot.drive(150, 0)
 robot.stop()</pre><pre>if color.color() == Color.BLUE:
-    print("מצאתי כחול!")</pre><p>הקיר לא תמיד באותו מקום (הריצו כמה פעמים), ולכן אי אפשר לנחש מספר.</p>`, 
- `<h2>חיישן אנושי: ללכת עד שנוגעים</h2><div class="two"><div><ul><li>הרובוט (עיניים עצומות) הולך קדימה עד שמישהו נוגע לו בכתף, ואז עוצר מיד.</li><li>המתכנת.ת לא נותן.ת מספר צעדים. הפקודה היחידה: "קדימה עד שנוגעים".</li><li>בכל סבב ה"קיר" (תלמיד עם ידיים מושטות) עומד במרחק אחר.</li></ul></div><div><p class="big">בקוד</p><pre>while not force.pressed():
-    robot.drive(150, 0)
-robot.stop()</pre><ul><li>למה אי אפשר לנחש מספר צעדים?</li><li>בונוס: קלף אדום, פנה שמאלה. קלף כחול, פנה ימינה (חיישן צבע).</li></ul></div></div>`,
- `<h2>חידון: מתי הלולאה נגמרת?</h2><pre>while not force.pressed():
-    robot.drive(150, 0)
-robot.stop()</pre><p>לולאת ה-<span class="code-inline">while</span> שלמעלה, זו שבשקף הקודם. מתי היא מפסיקה לחזור, והרובוט עובר לשורה <span class="code-inline">robot.stop()</span>?</p><div class="quiz"><button class="opt" data-ok="0">אחרי שלוש שניות</button><button class="opt" data-ok="1">כשחיישן המגע נלחץ</button><button class="opt" data-ok="0">אף פעם</button></div><p class="fb hidden">כשהחיישן נלחץ. התנאי "not force.pressed()" נכון כל עוד עוד לא לחצו. אפשר לראות בשקף הקודם.</p>`,
- `<h2>async, await ו-multitask</h2><pre class="runnable" data-w="8" data-rate="0.8">async def drive_task():
+    print("מצאתי כחול!")</pre><p>הקיר לא תמיד באותו מקום (הריצו כמה פעמים), ולכן אי אפשר לנחש מספר.</p>`,
+ `<h2>עכשיו אתם</h2><ul><li>פותחים את לשונית "סימולטור ותרגול".</li><li>משימות 1 עד 3 ו-9 לכולם. 4 עד 6 למי שמתקדם. 7, 8 ו-10 לאתגר.</li><li>נתקעתם? קודם רמז, אחר כך שאלה לחבר, ואז אלינו.</li><li>לחצו "דיבאג" כדי לראות איזו שורה רצה עכשיו.</li></ul>`,
+ `<h2>הרחבות</h2><p>חומר לעיון עצמי. בדרך כלל לא מגיעים אליו בשיעור.</p><button class="btn primary skipend">דלגו לשקף האחרון</button>`,
+ `<div class="xbadge">הרחבה · לעיון עצמי</div><h2>דיבאג על רובוט אמיתי</h2><p>על הרובוט אין "שורה אחרי שורה". במקום זה: נקודת עצירה שמחכה ללחיצה על הכפתור.</p><pre>def wfb():   # wait for button
+    while Button.CENTER not in hub.buttons.pressed(): wait(10)
+    while hub.buttons.pressed(): wait(10)
+
+robot.straight(400)
+wfb()   # הגיע לאן שציפינו?
+robot.turn(90)
+wfb()</pre><p>בודקים, לוחצים וממשיכים. כשהכול עובד מוחקים את ה-<span class="code-inline">wfb()</span>.</p>`,
+ `<div class="xbadge">הרחבה · לעיון עצמי</div><h2>לולאה אנושית: ריבוע על הרצפה</h2><ul><li>מסמנים ריבוע על הרצפה בסרט. המתכנת.ת כותב.ת על הלוח תוכנית בלי לולאה: שמונה שורות.</li><li>הרובוט (עיניים עצומות) מבצע.</li></ul><p class="big">איך מקצרים את התוכנית?</p>`,
+ `<div class="xbadge">הרחבה · לעיון עצמי</div><h2>multitask אנושי: שני דברים יחד</h2><ul><li>שני מתנדבים: הרובוט הולך חמישה צעדים, והזרוע מרימה יד למשך שלוש שניות.</li><li>סבב 1: אחד אחרי השני. סבב 2: שניהם יחד. מודדים זמן בשעון עצר בכל סבב.</li></ul><p class="big">איך הקוד יגיד "שניהם יחד"?</p>`,
+ `<div class="xbadge">הרחבה · לעיון עצמי</div><h2>async, await ו-multitask</h2><pre class="runnable" data-w="8" data-rate="0.8">async def drive_task():
     await robot.straight(600)
 
 async def arm_task():
@@ -367,17 +371,15 @@ async def arm_task():
 async def main():
     await multitask(drive_task(), arm_task())
 
-run_task(main())</pre><p>await: חכו שהפעולה תסתיים. multitask: שתי פעולות יחד. נסו להחליף ל-<span class="code-inline">await drive_task()</span> ואז <span class="code-inline">await arm_task()</span> ולהשוות זמן, במשימה 8.</p>`, 
- `<h2>multitask אנושי: שני דברים יחד</h2><div class="two"><div><ul><li>שני מתנדבים: הרובוט הולך חמישה צעדים, והזרוע מרימה יד למשך שלוש שניות.</li><li>סבב 1: אחד אחרי השני (כמו <span class="code-inline">await</span> פעמיים). מודדים זמן בשעון עצר.</li><li>סבב 2: שניהם יחד (כמו <span class="code-inline">multitask</span>). מודדים שוב.</li></ul></div><div><p class="big">אחרי הניסוי</p><ul><li>כמה זמן לקח כל סבב?</li><li>מה היה קשה בתיאום?</li><li>איפה בקוד של הקבוצה זה קורה?</li></ul></div></div>`,
- `<h2>דיוק: מהר או לאט?</h2><div class="two"><div><ul><li>התחלה והאטה עדינות מונעות החלקה, ולכן הרובוט נוסע ישר יותר.</li><li>מהר מפיל בעוצמה, לאט מפיל בעדינות. בוחרים מהירות לפי המשימה.</li><li>אחרי נסיעה מהירה ממתינים רגע לפני פנייה.</li></ul></div><div><p class="big">נסו: מהר ואז לאט</p><pre class="runnable" data-w="1">robot.settings(straight_speed=500)
+run_task(main())</pre><p>await: חכו שהפעולה תסתיים. multitask: שתי פעולות יחד. נסו להחליף ל-<span class="code-inline">await drive_task()</span> ואז <span class="code-inline">await arm_task()</span> ולהשוות זמן, במשימה 8.</p>`,
+ `<div class="xbadge">הרחבה · לעיון עצמי</div><h2>דיוק: מהר או לאט?</h2><div class="two"><div><ul><li>התחלה והאטה עדינות מונעות החלקה, ולכן הרובוט נוסע ישר יותר.</li><li>מהר מפיל בעוצמה, לאט מפיל בעדינות. בוחרים מהירות לפי המשימה.</li><li>אחרי נסיעה מהירה ממתינים רגע לפני פנייה.</li></ul></div><div><p class="big">נסו: מהר ואז לאט</p><pre class="runnable" data-w="1">robot.settings(straight_speed=500)
 robot.straight(400)     # מהר
 robot.settings(straight_speed=150)
 robot.straight(100)     # לאט, בדיוק
 wait(150)
 robot.turn(90)</pre></div></div>`,
- `<h2>סימולציה מול המציאות</h2><ul><li>בסימולטור אין חיכוך, סחיפה או סוללה חלשה.</li><li>ברובוט האמיתי הגלגלים מחליקים והכיוון זז.</li><li>לכן בקוד של הקבוצה יש גירוסקופ ובקר PID שמתקן את הכיוון.</li></ul>`,
- `<h2>עכשיו אתם</h2><ul><li>פותחים את לשונית "סימולטור ותרגול".</li><li>משימות 1 עד 3 ו-9 לכולם. 4 עד 6 למי שמתקדם. 7, 8 ו-10 לאתגר.</li><li>נתקעתם? קודם רמז, אחר כך שאלה לחבר, ואז אלינו.</li><li>לחצו "דיבאג" כדי לראות איזו שורה רצה עכשיו.</li></ul>`,
- `<h2>הצעדים הבאים</h2><ul><li>התקנת VS Code ו-Pybricks, וחיבור רובוט אמיתי.</li><li>להריץ את הקוד שכתבתם היום על הרובוט.</li><li>להכיר את הקוד של שנה שעברה: מחלקת Robot ושלט.</li><li>להמשיך לבד: קורסי פייתון בעברית בקמפוס IL (בלשונית הסרטונים והחומרים).</li></ul><p class="big">כרטיס יציאה: מילה אחת על מה שלמדתי, ודבר אחד שלא ברור.</p>${vid("https://www.youtube.com/watch?v=_jbuG3N5pWI", "הגדרת VS Code עם Pybricks")}`,
+ `<div class="xbadge">הרחבה · לעיון עצמי</div><h2>סימולציה מול המציאות</h2><ul><li>בסימולטור אין חיכוך, סחיפה או סוללה חלשה.</li><li>ברובוט האמיתי הגלגלים מחליקים והכיוון זז.</li><li>לכן בקוד של הקבוצה יש גירוסקופ ובקר PID שמתקן את הכיוון.</li></ul>`,
+ `<h2>הצעדים הבאים</h2><ul><li>התקנת VS Code ו-Pybricks, וחיבור רובוט אמיתי.</li><li>להריץ את הקוד שכתבתם היום על הרובוט.</li><li>להכיר את הקוד של שנה שעברה: מחלקת Robot ושלט.</li><li>להמשיך לבד: קורסי פייתון בעברית בקמפוס IL (בלשונית הסרטונים והחומרים).</li></ul><p class="big">כרטיס יציאה: מילה אחת על מה שלמדתי, ודבר אחד שלא ברור.</p>`,
 ];
 /* ---- runnable examples inside slides ---- */
 let miniRaf = 0, autoTimer = 0, miniBusy = false;
@@ -446,6 +448,7 @@ function renderSlide(){
   $("sPrev").disabled = si === 0; $("sNext").disabled = si === SLIDES.length - 1;
   cancelAnimationFrame(miniRaf); clearTimeout(autoTimer); miniBusy = false; setupRunnables();
 }
+$("slide").addEventListener("click", (e) => { if (e.target.closest(".skipend")) { si = SLIDES.length - 1; renderSlide(); } });
 function goSlide(d){ si = Math.max(0, Math.min(SLIDES.length - 1, si + d)); renderSlide(); }
 $("sPrev").addEventListener("click", () => goSlide(-1));
 $("sNext").addEventListener("click", () => goSlide(1));
