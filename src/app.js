@@ -12,6 +12,7 @@ const store = { get(k){ try { return localStorage.getItem(k); } catch(e){ return
 
 /* ---- tabs ---- */
 const PRACTICE = /[?&](practice=(true|1)|s=q7x2)(&|#|$)/.test(location.search);
+if (PRACTICE) document.querySelectorAll(".toplinks").forEach((e) => (e.hidden = true));
 const PAGES = { plan: "plan", slides: "slides-tab", videos: "videos-tab", terms: "terms-tab", sim: "sim", planner: "planner-tab", code: "code-tab", ideas: "ideas-tab" };
 if (PRACTICE) {
   delete PAGES.plan;
