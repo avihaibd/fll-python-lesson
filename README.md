@@ -20,7 +20,8 @@ https://firstinspires.blob.core.windows.net/fll/challenge/2026-27/fll-challenge-
 - `src/app.js` – לוגיקת הממשק, החידון, המתכנן
 - `src/missions.js` – המשימות 1–10
 - `src/simcore.py` – מנוע הסימולטור (פייתון, רץ ב-Skulpt)
-- `src/seasonmap.jpg` – מפת העונה
+- `src/maps.js` – רשימת המפות (והמפה הנוכחית)
+- `src/maps/` – תמונות המפות. להוספת מפה: מוסיפים תמונה לכאן ושורה ב-`maps.js`
 
 לבדיקה מקומית צריך שרת (הדף טוען קבצים עם `fetch`, ולכן פתיחה ישירה של הקובץ לא תעבוד): `python3 -m http.server` ואז http://localhost:8000.
 
