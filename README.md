@@ -1,5 +1,7 @@
 # פייתון לרובוט: שיעור הכרות ל-FLL
 
+[לאתר](https://avihaibd.github.io/fll-python-lesson/) · [מצב תרגול לתלמידים](https://avihaibd.github.io/fll-python-lesson/?s=q7x2) · [הורדת המצגת (PowerPoint)](python-for-robot.pptx)
+
 דף יחיד (`index.html`) עם מערך שיעור, מצגת, סימולטור עם דיבאג, תכנון ריצה על המפה ומושגי יסוד.
 הפייתון רץ בדפדפן (Skulpt, נטען מ-jsDelivr), ולכן צריך חיבור לאינטרנט בכניסה לדף.
 
