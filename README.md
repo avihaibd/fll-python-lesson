@@ -1,6 +1,6 @@
 # פייתון לרובוט: שיעור הכרות ל-FLL
 
-[לאתר](https://avihaibd.github.io/fll-python-lesson/) · [מצב תרגול לתלמידים](https://avihaibd.github.io/fll-python-lesson/?s=q7x2) · [הורדת המצגת (PowerPoint)](python-for-robot.pptx)
+[← חזרה לאתר](https://avihaibd.github.io/fll-python-lesson/) · [מצב תרגול לתלמידים](https://avihaibd.github.io/fll-python-lesson/?s=q7x2)
 
 דף יחיד (`index.html`) עם מערך שיעור, מצגת, סימולטור עם דיבאג, תכנון ריצה על המפה ומושגי יסוד.
 הפייתון רץ בדפדפן (Skulpt, נטען מ-jsDelivr), ולכן צריך חיבור לאינטרנט בכניסה לדף.
@@ -28,3 +28,6 @@ https://firstinspires.blob.core.windows.net/fll/challenge/2026-27/fll-challenge-
 לבדיקה מקומית צריך שרת (הדף טוען קבצים עם `fetch`, ולכן פתיחה ישירה של הקובץ לא תעבוד): `python3 -m http.server` ואז http://localhost:8000.
 
 אופציונלי: `python3 src/build.py` יוצר `bundle.html`, קובץ יחיד עצמאי שאפשר לשלוח או לפתוח ישירות.
+
+## רישיון
+חופש שימוש, העתקה ושינוי לצורכי למידה והוראה, . הפרטים בקובץ [LICENSE](LICENSE).
